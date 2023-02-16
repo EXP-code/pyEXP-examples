@@ -5,13 +5,26 @@ import pickle
 
 from os.path import exists
 
+if (len(sys.argv)<2):
+    print('Usage: {} runtag [rmax]'.format(sys.argv[0]))
+    exit(1)
+
+rmax = 0.03
+if (len(sys.argv)>2):
+    rmax = float(sys.argv[2])
+
+nbin = 80
+if (len(sys.argv)>3):
+    nbin = int(sys.argv[3])
+
+
 # Make the file list for the snapshot sequence
 #
 beg_seq = 0
-end_seq = 6
+end_seq = 10000
 file_list = []
 for i in range(beg_seq, end_seq):
-    file_list.append('SPL.run2Fd_2.{:05d}'.format(i))
+    file_list.append('SPL.{}.{:05d}'.format(sys.argv[1], i))
 #                     ^
 #                     |
 #   Change this depending on your phase-space type
@@ -33,12 +46,13 @@ def getTime(time):
 
 
 times = []
-lower = [-0.03, -0.03, -0.03]
-upper = [ 0.03,  0.03,  0.03]
-ngrid = [  80,   80,   80]
+lower = [-rmax, -rmax, -rmax]
+upper = [ rmax,  rmax,  rmax]
+ngrid = [ nbin,  nbin,  nbin]
 
 fg = pyEXP.field.FieldGenerator(times, lower, upper, ngrid)
 gd = {}
+rd = {}
 
 for group in batches:
 
@@ -58,11 +72,13 @@ for group in batches:
     reader.SelectType(compname)
     
     tim = getTime(reader.CurrentTime())
-    gd[tim] = fg.histo(reader)
+    gd[tim] = fg.histo2d(reader)
+    rd[tim] = fg.histo1d(reader, rsize, nbins, "xy")
 
-for v in gd: print(v)
+keys =  list(gd.keys())
+print("Time[0]={}  Time[{}]={}".format(keys[0], len(keys)-1, keys[-1]))
 
+db = {'image': gd, 'histo': rd, 'lower': lower, 'upper': upper, 'ngrid': ngrid}
 file = open('imagePickle', 'wb')
-db = {'image': gd, 'lower': lower, 'upper': upper, 'ngrid': ngrid}
 pickle.dump(db, file)
 file.close()

@@ -7,6 +7,18 @@ import pickle
 
 from os.path import exists
 
+if (len(sys.argv)<2):
+    print('Usage: {} runtag [rmax]'.format(sys.argv[0]))
+    exit(1)
+
+rmax = 0.03
+if (len(sys.argv)>2):
+    rmax = float(sys.argv[2])
+
+nbin = 80
+if (len(sys.argv)>3):
+    nbin = int(sys.argv[3])
+
 #
 # This script makes an image histogram in parallel using MPI.  This
 # can easily be adapted for whatever snapshots you have and could be
@@ -32,7 +44,7 @@ if __name__ == "__main__":
     # Parameters
     #
     beg_seq = 0
-    end_seq = 633
+    end_seq = 10000
 
     # Get basic information about the MPI communicator
     #
@@ -53,7 +65,7 @@ if __name__ == "__main__":
     #
     file_list = []
     for i in range(beg_seq, end_seq):
-        file_list.append('SPL.run2Fd_3.{:05d}'.format(i))
+        file_list.append('SPL.{}.{:05d}'.format(sys.argv[1], i))
 
     # Construct batches of files the particle reader.  One could use the
     # parseStringList to create batches from a vector/list of files.  NB:
@@ -65,12 +77,13 @@ if __name__ == "__main__":
     yz = {}
 
     times = []
-    lower = [-0.03, -0.03, -0.03]
-    upper = [ 0.03,  0.03,  0.03]
-    ngrid = [  80,   80,   80]
+    lower = [-rmax, -rmax, -rmax]
+    upper = [ rmax,  rmax,  rmax]
+    ngrid = [ nbin,  nbin,  nbin]
 
     fg = pyEXP.field.FieldGenerator(times, lower, upper, ngrid)
     gd = {}
+    rd = {}
 
     for group in batches:
 
@@ -90,12 +103,13 @@ if __name__ == "__main__":
         reader.SelectType(compname)
         
         tim = fixTime(reader.CurrentTime())
-        gd[tim] = fg.histo(reader)
+        gd[tim] = fg.histo2d(reader)
+        rd[tim] = fg.histo1d(reader, rmax, nbin, "xy")
 
     if my_rank==0:
         keys = list(gd.keys())
         print('First time={}  last time={}'.format(keys[0], keys[-1]))
         file = open('imagePickle', 'wb')
-        db = {'image': gd, 'lower': lower, 'upper': upper, 'ngrid': ngrid}
+        db = {'image': gd, 'histo': rd, 'lower': lower, 'upper': upper, 'ngrid': ngrid}
         pickle.dump(db, file)
         file.close()
