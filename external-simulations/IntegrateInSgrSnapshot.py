@@ -3,6 +3,8 @@ an example script for making some MW orbits from the Sgr simulation of Laporte+ 
 
 this version of the script assumes you have already computed the bases elsewhere.
 
+note: this version now uses pygadgetreader. there is a native EXP reader as well, which is commented out. for many applications, you may prefer to use that, owing to the more seamless integration!
+
 """
 
 # the first part of this script follows (a non parallel version of) EXP-code/pyEXP-examples/external-simulations/make_coefficients_MPI.py
@@ -13,6 +15,10 @@ import os
 import pyEXP
 import matplotlib.pyplot as plt
 
+import pygadgetreader
+
+
+
 # most functions have documentation, which may be accessed like this:
 print(pyEXP.read.ParticleReader.createReader.__doc__)
 
@@ -20,20 +26,31 @@ print(pyEXP.read.ParticleReader.createReader.__doc__)
 basedir = '/Volumes/External1/ChervinSgrSim/'
 os.chdir(basedir)
 
+
 # this can be a list of snapshots, or you can loop through one at a time. For now, I'm just practicing on the first snapshot.
 group = ['snap_001']
 
-# read in the actual data
-reader = pyEXP.read.ParticleReader.createReader('GadgetNative', group, 0, True); # this will take a tens of seconds.
-print('The component names are:', reader.GetTypes())
+# if you have pygadgetreader, you can use that for a smaller memory footprint:
+# https://github.com/jveitchmichaelis/pygadgetreader
+
+# The component names are: ['bndry'=Sgr stars (Hernquist), 'bulge'=MW bulge, 'disk'=MW disk, 'dm'=MW halo, 'star'=DM halo of Sgr]
+P = pygadgetreader.readsnap(group[0],'pos','dm')
+# rotate/align/centre the positions here...
+
+M = pygadgetreader.readsnap(group[0],'mass','dm')
+t = pygadgetreader.readheader(group[0],'time')
+
+# read in the actual data, using the full EXP capabilities
+#reader = pyEXP.read.ParticleReader.createReader('GadgetNative', group, 0, True); # this will take a tens of seconds.
+#print('The component names are:', reader.GetTypes())
 # The component names are: ['Bndry'=Sgr stars (Hernquist), 'Bulge'=MW bulge, 'Disk'=MW disk, 'Halo'=MW halo, 'Stars'=DM halo of Sgr]
 # We currently only care about the MW halo, bulge, and disk. We'll expand them below.
 
 # the first step is to find the center of the simulation. Let's assume that is the halo centre for now. We will use this centre for all components.
-compname = 'Halo'
-reader.SelectType(compname) # this will take a few seconds.
-nskip = 50 # this needs to be a relatively small number to get a good centre. We might be able to get away with a little larger (if gadget sims are in kpc)
-center = pyEXP.util.getDensityCenter(reader, nskip) # this will take tens of seconds.
+#compname = 'Halo'
+#reader.SelectType(compname) # this will take a few seconds.
+#nskip = 50 # this needs to be a relatively small number to get a good centre. We might be able to get away with a little larger (if gadget sims are in kpc)
+#center = pyEXP.util.getDensityCenter(reader, nskip) # this will take tens of seconds.
 
 # we do need to record the center at each timestep for later translation, so let's open a file and print
 # only open the file and print the header at the first timestep!
@@ -61,8 +78,13 @@ halo_basis = pyEXP.basis.Basis.factory(halo_config)
 
 # make the coefficients
 compname = 'Halo'
-reader.SelectType(compname) # this will take a few seconds.
-halo_coef = halo_basis.createFromReader(reader, center) # this will take a few seconds
+
+# this version uses the native EXP reader format.
+#reader.SelectType(compname) # this will take a few seconds.
+#halo_coef = halo_basis.createFromReader(reader, center) # this will take a few seconds
+
+# if you want to use the array creator, do this:
+halo_coef = halo_basis.createFromArray(M,P, time=t)
 
 # make a makecoefs instance
 # only do this at the first step: afterwords just add (see below).
@@ -98,8 +120,17 @@ bulge_basis = pyEXP.basis.Basis.factory(bulge_config)
 
 # generate the coefficients
 compname = 'Bulge'
-reader.SelectType(compname) # this will take a few seconds.
-bulge_coef = bulge_basis.createFromReader(reader, center) # this will take a few seconds
+#reader.SelectType(compname) # this will take a few seconds.
+#bulge_coef = bulge_basis.createFromReader(reader, center) # this will take a few seconds
+
+P = pygadgetreader.readsnap(group[0],'pos','bulge')
+# rotate/align/centre the positions here...
+
+M = pygadgetreader.readsnap(group[0],'mass','bulge')
+t = pygadgetreader.readheader(group[0],'time')
+
+bulge_coef = bulge_basis.createFromArray(M,P, time=t)
+
 
 # make a makecoefs instance
 # only do this at the first step: afterwords just add (see below).
@@ -134,8 +165,17 @@ parameters :
 disk_basis = pyEXP.basis.Basis.factory(disk_config)
 
 compname = 'Disk'
-reader.SelectType(compname) # this will take a few seconds.
-disk_coef = disk_basis.createFromReader(reader, center) # this will take a few seconds
+#reader.SelectType(compname) # this will take a few seconds.
+#disk_coef = disk_basis.createFromReader(reader, center) # this will take a few seconds
+
+P = pygadgetreader.readsnap(group[0],'pos','disk')
+# rotate/align/centre the positions here...
+
+M = pygadgetreader.readsnap(group[0],'mass','disk')
+t = pygadgetreader.readheader(group[0],'time')
+
+disk_coef = disk_basis.createFromArray(M,P, time=t)
+
 
 # make a makecoefs instance
 # only do this at the first step: afterwords just add (see below).
