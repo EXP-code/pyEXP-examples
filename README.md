@@ -1,6 +1,7 @@
 # pyEXP-examples
 
-Tutorials and example workflows using the Python bindings to EXP.
+Tutorials and example workflows using the Python bindings to EXP.  Check the README in each of these directories for more content description.
+
 
 ## Organization
 
