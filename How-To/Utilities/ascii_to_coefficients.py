@@ -1,10 +1,14 @@
+# Reads an ascii text phase space file, makes basis coefficients, and
+# adds them to an HDF coefficient file.  This can be *easily* adapted
+# for any text file
+
 import os
 import time
 import pyEXP
 import numpy as np
 import matplotlib.pyplot as plt
 
-os.chdir('/data/Nbody/Better')
+os.chdir('/data/Nbody/DiskHaloB')
 
 # Make the halo basis config
 config="""

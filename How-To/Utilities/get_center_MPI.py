@@ -6,9 +6,10 @@ from mpi4py import MPI
 from os.path import exists
 
 #
-# This script makes an HDF5 coefficient set from some phase-space
-# files in parallel using MPI.  This can easily be adapted for
-# whatever snapshots you have and could be run on a cluster
+# This script estimates the density center set from some phase-space
+# files in parallel using MPI.  For use in coefficient generation.
+# This can easily be adapted for whatever snapshots you have and could
+# be run on a cluster
 #
 
 # Usage:
