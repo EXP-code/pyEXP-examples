@@ -9,7 +9,7 @@ def pprint(str="", end="\n", comm=MPI.COMM_WORLD):
     """Print for MPI parallel programs: Only rank 0 prints *str*."""
     if comm.rank == 0:
         print(str+end, end=' ')
-        
+
 # Get the basis config
 #
 disk_config = """
@@ -17,10 +17,10 @@ id           : cylinder
 parameters   :
   acyl       : 1.0
   hcyl       : 0.1
-  lmax       : 48
+  lmaxfid    : 48
+  nmaxfid    : 48
   mmax       : 10
-  nmax       : 48
-  ncylorder  : 32
+  nmax       : 32
   ncylodd    : 6
   ncylnx     : 256
   ncylny     : 128

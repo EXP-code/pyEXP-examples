@@ -7,4 +7,4 @@ Cookbook examples
 | Directory    | Contents |
 | ---          | ---      |
 | Recipes      | Example workflows using pyEXP |
-| Utilities    | Using pyEXP in scripts for post-processing BFE coefficients |
+| Utilities    | Using pyEXP in scripts for post-processing BFE coefficients.  See the README in 'Utilities' for contents. |

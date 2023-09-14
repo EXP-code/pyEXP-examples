@@ -2,6 +2,8 @@
 
 Scripts and notebooks that illustrate the features of pyEXP
 
+New to pyEXP? Start with the two-part tutorial in the Introduction.
+
 ## Organization
 
 | Directory    | Contents |

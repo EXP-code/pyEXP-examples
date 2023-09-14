@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # I'm reading a previously computed native cylindrical coefficient set,
 # saving it as HDF5, and executing some MSSA computations
 #
-os.chdir('/home/weinberg/Nbody/Better')
+os.chdir('/home/weinberg/Nbody/DiskHaloB')
 
 # Get the basis config
 #

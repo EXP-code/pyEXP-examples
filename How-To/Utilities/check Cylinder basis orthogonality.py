@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import pyEXP
 
-# I'm using the model from the EXP example Better run here.  For
+# I'm using the model from the EXP example DiskHaloB run here.  For
 # others, you will want to change this a directory containing a
 # spherical model for the basis or put the file in the working
 # directory and omit the following line
 #
-os.chdir('/home/weinberg/Projects/EXP/examples/Better')
+os.chdir('/home/weinberg/Projects/EXP/examples/DiskHaloB')
 
 Mmax = 6
 
