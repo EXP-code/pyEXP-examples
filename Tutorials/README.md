@@ -6,14 +6,14 @@ New to pyEXP? Start with the two-part tutorial in the Introduction.
 
 ## Launching Jupyter for the tutorials
 
-The `Tutorials` directory provides all the necessary data in the
-`Data` subdirectory. The easiest strategy is to launch Jupyter in the
-`Tutorials` directory and then navigate to subdirectories to run
-individual notebooks. If you are using the Docker image, start your
-`expbox` script using the `-d /path/to/pyEXP-examples/Tutorials` flag.
+Start Jupyter in the `Tutorials` directory and then navigate to
+subdirectories to run individual notebooks. If you are using the
+Docker image, start your `expbox` script using the `-d
+/path/to/pyEXP-examples/Tutorials` flag.
 
-We recommend beginning with the `Introduction` subdirectory for the
-best experience.
+The `Tutorials` directory provides all the necessary data in the
+`Data` subdirectory.  We recommend beginning with the `Introduction`
+subdirectory for the best experience.
 
 ## Organization
 
@@ -24,4 +24,4 @@ best experience.
 | mSSA         | Learn to explore the temporal features of coefficients using multivariate Singular Spectrum Analysis |
 | Basis        | Visualize your BFE basis using pyEXP |
 | Orbits       | Integrate orbits in the gravitational field respresented by the BFE coefficients |
-
+| Data         | Test data from the EXP-examples/Nbody example used in these tutorial notebooks |
