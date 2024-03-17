@@ -8,14 +8,15 @@ import matplotlib.pyplot as plt
 # I'm reading a previously computed native cylindrical coefficient set,
 # saving it as HDF5, and executing some MSSA computations
 #
-os.chdir('/home/weinberg/Nbody/DiskHaloB')
+os.chdir('../Data')
 
 # Get the basis config
 #
 yaml_config = ""
-with open('disk_basis.yaml') as f:
+with open('config.yaml') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
-    yaml_config = yaml.dump(config)
+    yaml_config = yaml.dump(config['Components'][1]['force'])
+
 
 # Construct the basis instance
 #

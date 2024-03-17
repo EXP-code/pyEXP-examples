@@ -4,6 +4,17 @@ Scripts and notebooks that illustrate the features of pyEXP
 
 New to pyEXP? Start with the two-part tutorial in the Introduction.
 
+## Launching Jupyter for the tutorials
+
+The `Tutorials` directory provides all the necessary data in the
+`Data` subdirectory. The easiest strategy is to launch Jupyter in the
+`Tutorials` directory and then navigate to subdirectories to run
+individual notebooks. If you are using the Docker image, start your
+`expbox` script using the `-d /path/to/pyEXP-examples/Tutorials` flag.
+
+We recommend beginning with the `Introduction` subdirectory for the
+best experience.
+
 ## Organization
 
 | Directory    | Contents |

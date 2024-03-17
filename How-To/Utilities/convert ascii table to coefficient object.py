@@ -8,7 +8,7 @@ import pyEXP
 import numpy as np
 import matplotlib.pyplot as plt
 
-os.chdir('/data/Nbody/DiskHaloB')
+os.chdir('/data/Nbody/NewNbody/new')
 
 # Make the halo basis config
 config="""
@@ -22,6 +22,7 @@ parameters :
   nmax: 10
   scale: 0.0667
   modelname: SLGridSph.model
+  cachename: SLGridSph.cache
 ...
 """
 
