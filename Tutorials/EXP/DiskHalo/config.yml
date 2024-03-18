@@ -32,14 +32,14 @@ Components:
     bodyfile   : halo.bods
     force :
       id : sphereSL
-      parameters : {rmax: 1.95, nmax: 6, Lmax: 2, EVEN_L: true, cachename: sphereSL.cache.test}
+      parameters : {rmax: 1.95, nmax: 6, Lmax: 2, cachename: sphereSL.cache.test}
 
   - name       : star disk
     parameters : {nlevel: 1}
     bodyfile   : disk.bods
     force :
       id : cylinder
-      parameters : {acyl: 0.01, lmaxfid: 48, nmaxfid: 48, mmax: 2, EVEN_M: true, hcyl: 0.002, nmax: 8, ncylodd: 2, ncylnx: 256, ncylny: 128, cachename: eof.cache.test}
+      parameters : {acyl: 0.01, lmaxfid: 48, nmaxfid: 48, mmax: 2, hcyl: 0.002, nmax: 8, ncylodd: 2, ncylnx: 256, ncylny: 128, cachename: eof.cache.test}
 #
 # The parameters could be expressed like this, equivalently:
 #
