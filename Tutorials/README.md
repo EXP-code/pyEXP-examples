@@ -24,4 +24,5 @@ subdirectory for the best experience.
 | mSSA         | Learn to explore the temporal features of coefficients using multivariate Singular Spectrum Analysis |
 | Basis        | Visualize your BFE basis using pyEXP |
 | Orbits       | Integrate orbits in the gravitational field respresented by the BFE coefficients |
+| EXP          | Notebook-based tutorials for running simulations with EXP |
 | Data         | Test data from the EXP-examples/Nbody example used in these tutorial notebooks |

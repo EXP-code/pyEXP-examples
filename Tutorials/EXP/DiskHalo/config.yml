@@ -1,0 +1,88 @@
+---
+# YAML 1.2
+# See: http://yaml.org for more info.  EXP uses the yaml-cpp library
+# (http://github.com/jbeder/yaml-cpp) for parsing and emitting YAML
+#
+# ------------------------------------------------------------------------
+# These parameters control the simulation
+# ------------------------------------------------------------------------
+Global:
+  outdir     : data
+  nthrds     : 1
+  dtime      : 0.002
+  ldlibdir   : /usr/local/EXP/lib/user
+  runtag     : run0
+  nsteps     : 500
+  multistep  : 8
+  dynfracA   : 0.004
+  dynfracV   : 0.02
+  infile     : OUT.run0.chkpt
+  VERBOSE    : 4
+  cuda       : off
+
+# ------------------------------------------------------------------------
+# This is a sequence of components.  The parameters for the force are
+# now included as a parameter map, rather than a separate file.
+#
+# Each indented stanza beginning with '-' is a component
+# ------------------------------------------------------------------------
+Components:
+  - name       : dark halo
+    parameters : {nlevel: 1}
+    bodyfile   : halo.bods
+    force :
+      id : sphereSL
+      parameters : {rmax: 1.95, nmax: 6, Lmax: 2, cachename: sphereSL.cache.test}
+
+  - name       : star disk
+    parameters : {nlevel: 1}
+    bodyfile   : disk.bods
+    force :
+      id : cylinder
+      parameters : {acyl: 0.01, lmaxfid: 48, nmaxfid: 48, mmax: 2, hcyl: 0.002, nmax: 8, ncylodd: 2, ncylnx: 256, ncylny: 128, cachename: eof.cache.test}
+#
+# The parameters could be expressed like this, equivalently:
+#
+#       parameters :
+#         nlevel   : 1
+#
+
+# ------------------------------------------------------------------------
+# This is a sequence of outputs
+# ------------------------------------------------------------------------
+Output:
+  - id : outlog
+    parameters : {nint: 10}
+  - id : outpsn
+    parameters : {nint: 10}
+  - id : outchkpt
+    parameters : {nint: 100}
+  - id : outcoef
+    parameters : {nint: 1, name: star disk}
+  - id : outcoef
+    parameters : {nint: 1, name: dark halo}
+
+# ------------------------------------------------------------------------
+# This is a sequence of external forces
+# This can be empty (or missing)
+# ------------------------------------------------------------------------
+External:
+# Currently empty
+
+  # Examples . . .
+  # - id : usertest
+  #   parameters : {parm: 3}
+  # - id : userbar
+  #   parameters : {U5: 1.0, comname: sphereSL}
+
+
+
+# ------------------------------------------------------------------------
+# Excluded list of interations as name1 : name2 map entries
+# This can be empty (or missing).  By default, all components will
+# interact unless interactions are listed below.  This behavior can
+# be inverted using the 'allcouples: false' flag in the 'Global' map
+# ------------------------------------------------------------------------
+Interaction:
+
+...
