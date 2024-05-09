@@ -12,4 +12,5 @@ use with pyEXP tutorials and for general code testing.
   sample of five orbits specified in the `../config.yml` file
 - The `OUTLOG.run0` file describes the global properties of the phase space in
   time for the entire ensemble and for each phase-space component
-  
+- The files, `config.cube.yml` and `outcoef.cube.run0`, are the
+  configuration and coefficients files, respectively, for a Cube simulation

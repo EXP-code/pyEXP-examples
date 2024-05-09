@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# This script is an example of applying MSSA to the coefficients you
+# This script is an example of applying mSSA to the coefficients you
 # created using pyEXP
 # 
 # This example assumes that you have run the `Part1-Coefficients`
