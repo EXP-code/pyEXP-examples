@@ -42,7 +42,7 @@ Components:
         nmaxfid        : 256
         scale          : 1.0
         Lmax           : 4
-        nmax           : 12
+        nmax           : 6
         NO_MONO        : true
         M0_BACK        : true
         self_consistent: true
