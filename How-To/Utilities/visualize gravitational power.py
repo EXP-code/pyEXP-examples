@@ -32,7 +32,7 @@ def main() -> int:
         coefs = pyEXP.coefs.Coefs.factory(sys.argv[n])
         power = coefs.Power()
         for i in range(0, power.shape[1]):
-            plt.semilogy(coefs.Times(), power[:,i], label='{}'.format(i))
+            plt.semilogy(coefs.Times(), np.sqrt(power[:,i]), label='{}'.format(i))
         plt.legend()
         plt.xlabel('Time')
         plt.ylabel(r'[mean amplitude]=[grav energy]$^{1/2}=[\sum_{n}|a_{mn}|^2]^{1/2}$')
