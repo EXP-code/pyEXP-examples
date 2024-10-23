@@ -13,7 +13,7 @@ os.chdir('../Data')
 # Get the basis config
 #
 yaml_config = ""
-with open('config.yaml') as f:
+with open('config.yml') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
     yaml_config = yaml.dump(config['Components'][1]['force'])
 
@@ -24,7 +24,7 @@ basis = pyEXP.basis.Basis.factory(yaml_config)
 
 # Make the coefficients by the factory method
 #
-coefs = pyEXP.coefs.Coefs.factory('outcoef.star.run0')
+coefs = pyEXP.coefs.Coefs.factory('outcoef.star disk.run0')
 print('The coefficient time list is', coefs.Times())
 
 # Try saving coefficients to an HDF5 file
@@ -59,38 +59,38 @@ for v in surfaces:
 
 # Print the potential image at the final time
 # 
-nx = surfaces[final]['p'].shape[0]
-ny = surfaces[final]['p'].shape[1]
+nx = surfaces[final]['potl m>0'].shape[0]
+ny = surfaces[final]['potl m>0'].shape[1]
 
 x = np.linspace(pmin[0], pmax[0], nx)
 y = np.linspace(pmin[1], pmax[1], ny)
 xv, yv = np.meshgrid(x, y)
 
-cont1 = plt.contour(xv, yv, surfaces[final]['p'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['potl m>0'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['p'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['potl m>0'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Potential at T={}'.format(final))
 plt.show()
 
-cont1 = plt.contour(xv, yv, surfaces[final]['fr'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['rad force'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['fr'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['rad force'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Radial force at T={}'.format(final))
 plt.show()
 
-cont1 = plt.contour(xv, yv, surfaces[final]['ft'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['azi force'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['ft'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['azi force'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
-plt.title('Vertical force at T={}'.format(final))
+plt.title('Tangential force at T={}'.format(final))
 plt.show()
 
 # Okay, now try expMSSA
@@ -174,38 +174,38 @@ for v in surfaces:
 
 # Print the potential image at the final time (I think there is a
 # fencepost issue in this grid, no matter).
-nx = surfaces[final]['p'].shape[0]
-ny = surfaces[final]['p'].shape[1]
+nx = surfaces[final]['potl m>0'].shape[0]
+ny = surfaces[final]['potl m>0'].shape[1]
 
 x = np.linspace(pmin[0], pmax[0], nx)
 y = np.linspace(pmin[1], pmax[1], ny)
 xv, yv = np.meshgrid(x, y)
 
-cont1 = plt.contour(xv, yv, surfaces[final]['p'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['potl m>0'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['p'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['potl m>0'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Potential at T={}'.format(final))
 plt.show()
 
-cont1 = plt.contour(xv, yv, surfaces[final]['fr'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['rad force'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['fr'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['rad force'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Radial force at T={}'.format(final))
 plt.show()
 
-cont1 = plt.contour(xv, yv, surfaces[final]['ft'].transpose(), colors='k')
+cont1 = plt.contour(xv, yv, surfaces[final]['azi force'].transpose(), colors='k')
 plt.clabel(cont1, fontsize=9, inline=True)
-cont2 = plt.contourf(xv, yv, surfaces[final]['ft'].transpose())
+cont2 = plt.contourf(xv, yv, surfaces[final]['azi force'].transpose())
 plt.colorbar(cont2)
 plt.xlabel('x')
 plt.ylabel('y')
-plt.title('Vertical force at T={}'.format(final))
+plt.title('Tangential force at T={}'.format(final))
 plt.show()
 
 
