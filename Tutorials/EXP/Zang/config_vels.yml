@@ -1,0 +1,85 @@
+---
+# YAML 1.2
+# See: http://yaml.org for more info.  EXP uses the yaml-cpp library
+# (http://github.com/jbeder/yaml-cpp) for parsing and emitting YAML
+#
+# ------------------------------------------------------------------------
+# These parameters control the simulation
+# ------------------------------------------------------------------------
+Global:
+  outdir     : data
+  dtime      : 0.1
+  ldlibdir   : /usr/local/EXP/lib/user
+  infile     : OUT.run0.chkpt
+  runtag     : run0
+  nsteps     : 1000
+  multistep  : 6
+  dynfracA   : 0.01
+  dynfracV   : 0.01
+  VERBOSE    : 5
+  cuda       : false
+  ngpus      : 4
+
+# ------------------------------------------------------------------------
+# This is a sequence of components.  The parameters for the force are
+# now included as a parameter map, rather than a separate file.
+#
+# Each indented stanza beginning with '-' is a component
+# ------------------------------------------------------------------------
+Components:
+  - name       : disk
+    parameters : {nlevel: 1}
+    bodyfile   : zang.bods
+    force :
+# see src/Component.H for the available force routines
+      id : flatdisk
+      parameters:
+        diskconf       : {name: zang, parameters: {vrot: 1.0, Ninner: 4.0, Mouter: 5.0, Ri: 1.0, Ro: 11.5}}
+        background     : {name: zang, parameters: {vrot: 1.0, Ninner: 4.0, Mouter: 5.0, Ri: 1.0, Ro: 11.5}}
+        rcylmin        : 0.01
+        rcylmax        : 50.0
+        numx           : 128
+        numy           : 64
+        nmaxfid        : 256
+        scale          : 1.0
+        Lmax           : 4
+        nmax           : 6
+        EVEN_M         : true
+        NO_MONO        : true
+        M0_BACK        : true
+        self_consistent: true
+        cachename      : eof_cache_2d.50
+#
+
+# ------------------------------------------------------------------------
+# This is a sequence of outputs
+# ------------------------------------------------------------------------
+Output:
+  - id : outlog
+    parameters : {nint: 10}
+  - id : outpsn
+    parameters : {nint: 500}
+  - id : outchkpt
+    parameters : {nint: 1000}
+  - id : outcoef
+    parameters : {nint: 10, name: disk, filename: outcoef.disk.run0 }
+  - id : outvel
+    parameters : {nint: 10, name: disk, model: file, modelname: density.model, dof: 2, mmax: 2, nmax: 4  }
+
+# ------------------------------------------------------------------------
+# This is a sequence of external forces
+# This can be empty (or missing)
+# ------------------------------------------------------------------------
+External:
+# put in a rigid halo, just for stability testing
+#  - id: userhalo
+#    parameters : 
+#      modelfile    : SLGridSph.model
+
+
+# ------------------------------------------------------------------------
+# List of interations as name1 : name2 map entries
+# This can be empty (or missing)
+# ------------------------------------------------------------------------
+Interaction:
+  
