@@ -88,11 +88,11 @@ def twopower_density(r,a,alpha,beta):
     return (ra**-alpha)*(1+ra)**(-beta+alpha)
 
 
-# realise an analytic basis. in this case, it's a hernquist (alpha=1,beta=3)
+# realise an analytic basis. in this case, it's a hernquist (alpha=1,beta=4), see BT08 eq. 2.64
 hernquist_rs = 15. # in kpc
 total_mass   = 1.0 # this can be in any units; note that EXP enforces G=1, so the mass will be scaled.
 
-R,D,M,P = makemodel(twopower_density,total_mass,[hernquist_rs,1,3],rvals = 10.**np.linspace(-1.,3.,2000),pfile='Hernquist_rs{}.dat'.format(hernquist_rs))
+R,D,M,P = makemodel(twopower_density,total_mass,[hernquist_rs,1,4],rvals = 10.**np.linspace(-1.,3.,2000),pfile='Hernquist_rs{}.dat'.format(hernquist_rs))
 
 
 # now, let's generate a Hernquist basis inside EXP.
