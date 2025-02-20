@@ -57,6 +57,8 @@ def main(prog, argv) -> int:
    #
    params = pyEXP.basis.Cylindrical.cacheInfo(cfile)
 
+   print(params)
+
    Mmax = int(params['mmax'])
 
    bconfig = """
@@ -67,19 +69,22 @@ parameters:
   hcyl: {}
   mmax: {}
   nmax: {}
-  ncylorder: {}
+  ncylodd: {}
+  lmaxfid: {}
+  nmaxfid: {}
   ncylnx: {}
   ncylny: {}
-  eof_file: {}
+  cachename: {}
 ...
 """.format(params['ascl'], params['hscl'], params['mmax'], params['nmax'],
-           params['norder'], params['numx'], params['numy'], cfile)
+           params['nodd'], params['lmaxfid'], params['nmaxfid'],
+           params['numx'], params['numy'], cfile)
    
    # Construct the basis instance
    #
    basis = pyEXP.basis.Basis.factory(bconfig)
 
-   Norder = int(params['norder'])
+   Norder = int(params['nmax'])
 
    # Plot the matrices as images with a greyscale color map
    #
@@ -106,7 +111,7 @@ parameters:
             if n<Norder:
                ax = plt.subplot(gs[n])
                plt.axis('off')
-               cx = plt.contourf(xv, yv, grid[m][n].transpose())
+               cx = plt.contourf(xv, yv, grid[m][n]['potential'].transpose())
                n += 1
 
       plt.annotate("m={}".format(m), (0.5, 0.95), xycoords='figure fraction')

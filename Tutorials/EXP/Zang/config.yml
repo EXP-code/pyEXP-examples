@@ -35,6 +35,7 @@ Components:
       id : flatdisk
       parameters:
         diskconf       : {name: zang, parameters: {vrot: 1.0, Ninner: 4.0, Mouter: 5.0, Ri: 1.0, Ro: 11.5}}
+        background     : {name: zang, parameters: {vrot: 1.0, Ninner: 4.0, Mouter: 5.0, Ri: 1.0, Ro: 11.5}}
         rcylmin        : 0.01
         rcylmax        : 50.0
         numx           : 128
