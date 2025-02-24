@@ -212,6 +212,7 @@ plt.show()
 # Try the kmeans analysis (not sure this is working correctly yet,
 # although it used to work and nothing has changed)
 #
+ssa.reconstruct([0, 1, 2, 3, 4, 5, 6, 7])
 print('Calling k-means')
 ssa.kmeans()
 
