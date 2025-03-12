@@ -103,6 +103,7 @@ flags ="""
 ---
 # chatty: on
 output: mytest2
+allchan: true
 ...
 """
 
@@ -212,8 +213,16 @@ plt.show()
 # Try the kmeans analysis (not sure this is working correctly yet,
 # although it used to work and nothing has changed)
 #
+ssa.reconstruct([0, 1, 2, 3, 4, 5, 6, 7])
 print('Calling k-means')
-ssa.kmeans()
+id, dist, err = ssa.kmeans()
+
+# Print the results
+print('\n')
+print('{:<4s} | {:<4s} | {:<13s}'.format('PC', 'id', 'distance'))
+print('{:<4s} | {:<4s} | {:<13s}'.format('----', '----', '--------'))
+for k in range(len(id)):
+    print('{:<4d} | {:<4d} | {:<13.6e}'.format(k, id[k], dist[k]))
 
 # Test the PNG output
 #
