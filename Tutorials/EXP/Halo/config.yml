@@ -1,0 +1,68 @@
+---
+# YAML 1.2
+# See: http://yaml.org for more info.  EXP uses the yaml-cpp library
+# (http://github.com/jbeder/yaml-cpp) for parsing and emitting YAML
+#
+# ------------------------------------------------------------------------
+# These parameters control the simulation
+# ------------------------------------------------------------------------
+Global:
+  outdir     : data
+  nthrds     : 1
+  dtime      : 0.002
+  ldlibdir   : /home/weinberg/.local/lib/user
+  runtag     : run0
+  nsteps     : 1000
+  multistep  : 8
+  dynfracA   : 0.004
+  dynfracV   : 0.02
+  infile     : OUT.run0.chkpt
+  VERBOSE    : 4
+  cuda       : off
+
+# ------------------------------------------------------------------------
+# This is a sequence of components.  The parameters for the force are
+# now included as a parameter map, rather than a separate file.
+#
+# Each indented stanza beginning with '-' is a component
+# ------------------------------------------------------------------------
+Components:
+  - name       : halo
+    parameters : {nlevel: 1}
+    bodyfile   : halo.bods
+    force :
+      id : sphereSL
+      parameters : {rmax: 1.95, nmax: 6, Lmax: 2, cachename: sphereSL.cache.test}
+
+# ------------------------------------------------------------------------
+# This is a sequence of outputs
+# ------------------------------------------------------------------------
+Output:
+  - id : outlog
+    parameters : {nint: 10}
+  - id : outpsn
+    parameters : {nint: 10}
+  - id : outchkpt
+    parameters : {nint: 100}
+  - id : outcoef
+    parameters : {nint: 1, name: halo}
+  - id : outvel
+    parameters : {nint: 10, name: halo, model: file, dof: 3, lmax: 2, nmax: 6 }
+
+# ------------------------------------------------------------------------
+# This is a sequence of external forces
+# This can be empty (or missing)
+# ------------------------------------------------------------------------
+External:
+ - id : userbar
+   parameters : {length: 0.03, amp: 0.01, ctrname: halo, fixed: true}
+
+# ------------------------------------------------------------------------
+# Excluded list of interations as name1 : name2 map entries
+# This can be empty (or missing).  By default, all components will
+# interact unless interactions are listed below.  This behavior can
+# be inverted using the 'allcouples: false' flag in the 'Global' map
+# ------------------------------------------------------------------------
+Interaction:
+
+...
