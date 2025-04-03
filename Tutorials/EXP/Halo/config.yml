@@ -10,7 +10,7 @@ Global:
   outdir     : data
   nthrds     : 1
   dtime      : 0.002
-  ldlibdir   : /home/weinberg/.local/lib/user
+  ldlibdir   : /usr/local/EXP/lib/user
   runtag     : run0
   nsteps     : 1000
   multistep  : 8
