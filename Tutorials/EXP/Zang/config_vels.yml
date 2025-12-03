@@ -64,7 +64,15 @@ Output:
   - id : outcoef
     parameters : {nint: 10, name: disk, filename: outcoef.disk.run0 }
   - id : outvel
-    parameters : {nint: 10, name: disk, model: file, modelname: density.model, dof: 2, mmax: 2, nmax: 4  }
+    parameters :
+      nint: 10
+      name: disk
+      model: file
+      modelname: density.model
+      dof: 2
+      lmax: 4
+      nmax: 12
+      rmapping: 1.0
 
 # ------------------------------------------------------------------------
 # This is a sequence of external forces

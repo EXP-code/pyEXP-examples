@@ -1,0 +1,99 @@
+Global:
+  nthrds    : 1
+  dtime     : 0.002
+  ldlibdir  : /home/mdw_umass_edu/lib/user
+  nsteps    : 2000
+  runtag    : run2
+  runtime   : 71.5
+  multistep : 4
+  infile    : SPL.run2.chkpt
+  dynfracA  : 0.002
+  dynfracV  : 0.03
+  dynfracP  : 0.03
+  NICE      : 0
+  VERBOSE   : 4
+  nreport   : 1
+  use_cuda  : false
+
+Components:
+  - name         : dark
+    bodyfile     : halo.bods
+    parameters   :
+      nlevel     : 1
+      EJ         : 2
+      EJdamp     : 1.0
+      nEJkeep    : 4
+      nEJwant    : 4096
+      comlog     : true
+      EJdryrun   : true
+      bunch      : 5000000
+    force        :
+      id         : sphereSL
+      parameters :
+        numr     : 2000
+        rmin     : 0.00001
+        rmax     : 2.0
+        Lmax     : 6
+        nmax     : 10
+        rmapping : 0.1
+        self_consistent : true
+        modelname : veltest.model
+        cachename : veltest.cache
+        EVEN_L   : false
+        M0_ONLY  : false
+
+  - name         : star
+    bodyfile     : disk.bods
+    parameters   :
+      nlevel     : 1
+      EJdamp     : 1.0
+      EJdryrun   : true
+      EJ         : 2
+      nEJkeep    : 4
+      nEJwant    : 4096
+      EJkinE     : false
+      EJext      : false
+      EJdiag     : false
+      EJdT       : 1.0e-8
+      bunch      : 100000
+    force        :
+      id         : cylinder
+      parameters :
+        acyl       : 0.014
+        hcyl       : 0.002
+        lmaxfid    : 72
+        mmax       : 4
+        nmaxfid    : 32
+        nmax       : 10
+        ncylodd    : 4
+        ncylnx     : 512
+        ncylny     : 256
+        rnum       : 200
+        pnum       : 1
+        tnum       : 80
+        rcylmin    : 0.001
+        rcylmax    : 100
+        ashift     : 0
+        vflag      : 16
+        logr       : true
+        self_consistent : true
+        cachename  : eof_veltest.cache
+
+Output:
+  - id : outlog
+    parameters : {nint : 1}
+  - id : outchkptq
+    parameters : {nint : 500}
+  - id : outcoef
+    parameters : {filename : outcoef.star.run2, name : star, nint : 1}
+  - id : outcoef
+    parameters : {filename : outcoef.dark.run2, name : dark, nint : 1}
+  - id : outvel
+    parameters : {nint: 100, name: dark, model: file, modelname: veltest.model, dof: 3, lmax: 4, nmax: 10 }
+  - id : outvel
+    parameters : {nint: 100, name: star, model: expon, dof: 2, lmax: 4, nmax: 16, rmin: 0.0001, rmax: 0.14, ascl: 0.014, rmapping: 0.014, delta: 0.0002 }
+
+External:
+# None
+
+Interaction:
