@@ -199,6 +199,9 @@ for v in surfaces:
 # At this point, it makes sense to save the coefficients that you have
 # just created.  This is sone with the following call:
 
+# Set the units of the coefficients
+coefs.setUnits([("length", "none", 1.0),("mass", "none", 1.0),("time", "none", 1.0), ("G", "none", 1.0)])
+
 
 coefs.WriteH5Coefs('test_coefs')
 

@@ -131,6 +131,8 @@ parameters  :
         #                          This is optional---+
         #                                             |
         if coefs is None:           #                 v
+            coefs.setUnits([("length", "none", 1.0),("mass", "none", 1.0),("time", "none", 1.0), ("G", "none", 1.0)])
+
             coefs = pyEXP.coefs.Coefs.makecoefs(coef, compname)
 
         # Add the coefficients to the container
